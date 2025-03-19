@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+.active{
+    color:blue;
+    
+  }
+  .basket_icon{
+    position: relative;
+  }
+  .basket_icon .dot{
+    position:absolute;
+    min-width:10px;
+    min-height:10px;
+    top:0px;
+    right:0px;
+    background-color: red;
+    border-radius: 5px;
+  }
