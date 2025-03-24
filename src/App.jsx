@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./Components/Header";
 import Home from "./Pages/Home";
 import Cart from "./Pages/Cart";
+import FooterArea from "./Components/FooterArea";
 
 
 const Menu = React.lazy(()=>import('./Pages/Menu'));
@@ -33,6 +34,7 @@ const App = () => {
           }/>
         
         </Routes>
+        <FooterArea/>
       </BrowserRouter>
     </div>
   );
