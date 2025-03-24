@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { assets } from "../assets/frontend_assets/assets";
+import { useSelector } from "react-redux";
 
 const Header = () => {
-    const [menu,setMenu] = useState("home");
+  const [menu, setMenu] = useState("home");
+  const cartItems = useSelector((state)=>state.fooditem.cartItems);
+  const totalQuantity = cartItems.reduce(
+    (total, data) => total + (data.quantity || 1),
+    0
+  );
   return (
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -14,7 +20,10 @@ const Header = () => {
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span className="self-center whitespace-nowrap dark:text-white">
-              <span className="text-4xl font-bold text-amber-600">G</span><span className="text-3xl font-semibold text-amber-300">oodies</span>
+              <span className="text-4xl font-bold text-amber-600">G</span>
+              <span className="text-3xl font-semibold text-amber-300">
+                oodies
+              </span>
             </span>
           </Link>
           <button
@@ -45,9 +54,11 @@ const Header = () => {
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <Link
-                   onClick={()=>setMenu("home")}
+                  onClick={() => setMenu("home")}
                   to="/"
-                  className={`block py-2 px-3 text-gray-900 rounded-sm md:bg-transparent md:text-gray-900 md:p-0  md:hover:text-blue-700 dark:text-white md:dark:text-blue-500 ${menu==="home"?"active":""}`}
+                  className={`block py-2 px-3 text-gray-900 rounded-sm md:bg-transparent md:text-gray-900 md:p-0  md:hover:text-blue-700 dark:text-white md:dark:text-blue-500 ${
+                    menu === "home" ? "active" : ""
+                  }`}
                   aria-current="page"
                 >
                   Home
@@ -55,18 +66,22 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                 onClick={()=>setMenu("menu")}
+                  onClick={() => setMenu("menu")}
                   to="/menu"
-                  className={`block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${menu==="menu"?"active":""}`}
+                  className={`block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${
+                    menu === "menu" ? "active" : ""
+                  }`}
                 >
                   Menu
                 </Link>
               </li>
-              <li >
+              <li>
                 <Link
-                  onClick={()=>setMenu("contact-us")}
+                  onClick={() => setMenu("contact-us")}
                   to="/contactus"
-                  className={`block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${menu==="contact-us"?"active":""}`}
+                  className={`block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${
+                    menu === "contact-us" ? "active" : ""
+                  }`}
                 >
                   Contact Us
                 </Link>
@@ -74,18 +89,20 @@ const Header = () => {
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
                 <img src={assets.search_icon} alt="Search" />
               </li>
-              <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
-                
-              <Link to="/cart"><img src={assets.basket_icon} alt="Add to Cart" /></Link>  
-                
-                
+              <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0 relative">
+                <Link to="/cart">
+                  <img src={assets.basket_icon} alt="Add to Cart" />
+                </Link>
+                <p className="absolute -top-2 -right-3 text-red-700">{totalQuantity}</p>
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
-               <button className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">SignIn</button>
+                <button className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">
+                  SignIn
+                </button>
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
-              <FaMoon />
-              <FaSun />
+                <FaMoon />
+                <FaSun />
               </li>
             </ul>
           </div>
