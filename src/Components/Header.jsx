@@ -4,9 +4,9 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { assets } from "../assets/frontend_assets/assets";
 import { useSelector } from "react-redux";
 
-const Header = () => {
+const Header = ({setSignIn}) => {
   const [menu, setMenu] = useState("home");
-  const cartItems = useSelector((state)=>state.fooditem.cartItems);
+  const cartItems = useSelector((state) => state.fooditem.cartItems);
   const totalQuantity = cartItems.reduce(
     (total, data) => total + (data.quantity || 1),
     0
@@ -19,12 +19,7 @@ const Header = () => {
             to="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <span className="self-center whitespace-nowrap dark:text-white">
-              <span className="text-4xl font-bold text-amber-600">G</span>
-              <span className="text-3xl font-semibold text-amber-300">
-                oodies
-              </span>
-            </span>
+            <img src={assets.logo} className="w-25 h-25" />
           </Link>
           <button
             data-collapse-toggle="navbar-default"
@@ -93,10 +88,13 @@ const Header = () => {
                 <Link to="/cart">
                   <img src={assets.basket_icon} alt="Add to Cart" />
                 </Link>
-                <p className="absolute -top-2 -right-3 text-red-700">{totalQuantity}</p>
+                <p className="absolute -top-2 -right-3 text-red-700">
+                  {totalQuantity}
+                </p>
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
-                <button className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">
+                <button className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+                onClick={()=>{setSignIn(true)}}>
                   SignIn
                 </button>
               </li>

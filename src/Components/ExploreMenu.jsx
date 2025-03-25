@@ -9,13 +9,13 @@ const ExploreMenu = ({category,setCategory}) => {
   return (
     <div className="flex flex-col">
       <h1 className="text-3xl font-semibold text-gray-600">Explore Our Menu</h1>
-      <p className="w-4xl">
+      <p className="">
         Choose from a diverse menu featuring a delectable array of dishes
         crafted with the finest ingredients and culinary expertise. Our mission
         is to satisfy your carvings and elevate your dining experience , one
         delicious meal at a time.
       </p>
-      <div className="my-5 flex justify-between items-center gap-5 overflow-x-clip">
+      <div className="my-5 flex justify-between items-center gap-5 overflow-auto">
         {menu_list.map((element, index) => {
           return (
             <div key={index} onClick={()=>setCategory(prev=>prev===element.menu_name?"All":element.menu_name)}>

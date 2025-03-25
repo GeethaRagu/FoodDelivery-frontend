@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
+import { assets } from "../assets/frontend_assets/assets";
 const FooterArea = () => {
   return (
     <div>
@@ -12,12 +13,7 @@ const FooterArea = () => {
                 to="/"
                 className="flex items-center space-x-3 rtl:space-x-reverse"
               >
-                <span className="self-center whitespace-nowrap dark:text-white">
-                  <span className="text-4xl font-bold text-amber-600">G</span>
-                  <span className="text-3xl font-semibold text-amber-300">
-                    oodies
-                  </span>
-                </span>
+                <img src={assets.logo} className="w-25 h-25" />
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
@@ -40,7 +36,7 @@ const FooterArea = () => {
                 </h2>
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li className="mb-4">
-                    <Link to="https://github.com/GeethaRagu/Front-end-GeethaRagu-learningmanagementsystem-frontend">
+                    <Link to="https://github.com/GeethaRagu/FoodDelivery-frontend" target="_blank">
                       Github
                     </Link>
                   </li>
@@ -51,7 +47,7 @@ const FooterArea = () => {
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="sm:flex sm:items-center sm:justify-between">
             <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-              © 2025
+              © 2025 &nbsp;
               <a href="/" className="hover:underline">
                 Goodies
               </a>
@@ -61,7 +57,7 @@ const FooterArea = () => {
             <div className="flex mt-4 sm:justify-center sm:mt-0">
               
               <a
-                href="https://github.com/GeethaRagu"
+                href="https://github.com/GeethaRagu" target="_blank"
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
               >
                 <svg
