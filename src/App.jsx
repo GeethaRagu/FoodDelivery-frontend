@@ -2,20 +2,22 @@ import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./Components/Header";
 import Home from "./Pages/Home";
-import Cart from "./Pages/Cart";
 import FooterArea from "./Components/FooterArea";
 import SignIn from "./Components/SignIn";
 
 const Menu = React.lazy(() => import("./Pages/Menu"));
 const ContactUs = React.lazy(() => import("./Pages/ContactUs"));
+const Cart = React.lazy(() => import("./Pages/Cart"));
+const PlaceOrder = React.lazy(() => import("./Pages/PlaceOrder"));
 
 const App = () => {
   const [signin, setSignIn] = useState(false);
   return (
-    <div>
-      {signin ? <SignIn/> : <></>}
+    <div className="flex flex-col h-screen justify-between">
+      {signin ? <SignIn setSignIn = {setSignIn} /> : <></>}
       <BrowserRouter>
         <Header setSignIn = {setSignIn} />
+        <div className="mb-auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -42,7 +44,16 @@ const App = () => {
               </React.Suspense>
             }
           />
+          <Route
+            path="/order"
+            element={
+              <React.Suspense fallback={<div>Loading..</div>}>
+                <PlaceOrder />
+              </React.Suspense>
+            }
+          />
         </Routes>
+        </div>
         <FooterArea />
       </BrowserRouter>
     </div>

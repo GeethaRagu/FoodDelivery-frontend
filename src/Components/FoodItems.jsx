@@ -32,24 +32,13 @@ const FoodItems = ({category}) => {
     dispatchItems(removeFromCart({ id }));
   };
 
-  //Total price
-  const totalPrice = cartItems.reduce(
-    (total, data) => total + data.price * (data.quantity || 1),
-    0
-  );
-  console.log("Totalprice", totalPrice);
-  //Total quantity
-  const totalQuantity = cartItems.reduce(
-    (total, data) => total + (data.quantity || 1),
-    0
-  );
-  console.log("TotalQuantity", totalQuantity);
+  
   return (
     <div>
       <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
         Top dishes near you
       </h2>
-      <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-2">
+      <div className="grid md:grid-cols-4 md:gap-4  sm:grid-cols-2 grid-cols-1 gap-2">
         {foodlist.map((element, index) => {
           if (category === "All" || category === element.category) {
             return (

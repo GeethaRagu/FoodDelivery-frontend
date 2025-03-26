@@ -7,8 +7,8 @@ const ExploreMenu = ({category,setCategory}) => {
    
 
   return (
-    <div className="flex flex-col">
-      <h1 className="text-3xl font-semibold text-gray-600">Explore Our Menu</h1>
+    <div className="flex flex-col" id="explore_menu">
+      <h1 className="text-3xl font-semibold text-gray-600 mb-2">Explore Our Menu</h1>
       <p className="">
         Choose from a diverse menu featuring a delectable array of dishes
         crafted with the finest ingredients and culinary expertise. Our mission

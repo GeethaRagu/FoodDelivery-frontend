@@ -4,7 +4,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { assets } from "../assets/frontend_assets/assets";
 import { useSelector } from "react-redux";
 
-const Header = ({setSignIn}) => {
+const Header = ({ setSignIn }) => {
   const [menu, setMenu] = useState("home");
   const cartItems = useSelector((state) => state.fooditem.cartItems);
   const totalQuantity = cartItems.reduce(
@@ -14,7 +14,7 @@ const Header = ({setSignIn}) => {
   return (
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div className="max-w-screen flex flex-wrap items-center justify-between mx-auto p-4">
           <Link
             to="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -59,17 +59,22 @@ const Header = ({setSignIn}) => {
                   Home
                 </Link>
               </li>
-              <li>
-                <Link
-                  onClick={() => setMenu("menu")}
-                  to="/menu"
-                  className={`block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${
-                    menu === "menu" ? "active" : ""
-                  }`}
-                >
-                  Menu
-                </Link>
-              </li>
+              {menu === "home" || menu === "menu" ? (
+                <li>
+                  <a
+                    onClick={() => setMenu("menu")}
+                    href="#explore_menu"
+                    className={`block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${
+                      menu === "menu" ? "active" : ""
+                    }`}
+                  >
+                    Menu
+                  </a>
+                </li>
+              ) : (
+                <></>
+              )}
+
               <li>
                 <Link
                   onClick={() => setMenu("contact-us")}
@@ -85,16 +90,24 @@ const Header = ({setSignIn}) => {
                 <img src={assets.search_icon} alt="Search" />
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0 relative">
-                <Link to="/cart">
+                <Link to="/cart" onClick={()=>setMenu("cart")}>
                   <img src={assets.basket_icon} alt="Add to Cart" />
                 </Link>
-                <p className="absolute -top-2 -right-3 text-red-700">
-                  {totalQuantity}
-                </p>
+                {cartItems.length > 0 ? (
+                  <p className="md:absolute md:-top-2 md:-right-3 text-red-700">
+                    {totalQuantity}
+                  </p>
+                ) : (
+                  <></>
+                )}
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
-                <button className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
-                onClick={()=>{setSignIn(true)}}>
+                <button
+                  className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+                  onClick={() => {
+                    setSignIn(true);
+                  }}
+                >
                   SignIn
                 </button>
               </li>

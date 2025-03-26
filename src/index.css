@@ -7,6 +7,9 @@
 body{
   min-height: 100vh;
 }
+button{
+  cursor: pointer;
+}
 .active{
     color:blue;
     
@@ -33,4 +36,7 @@ body{
    }
    .banner h2{
       font-size:max(4.5vw,22px)
+   }
+   .bg-black-90{
+    background-color: #00000090;
    }
