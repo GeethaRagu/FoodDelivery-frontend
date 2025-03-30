@@ -1,20 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addtoCart,
   decrementProduct,
   incrementProduct,
   removeFromCart,
+  showProducts,
 } from "../Redux/Slice/FoodSlice";
 import { assets } from "../assets/frontend_assets/assets";
+import axios from "axios";
 
 const FoodItems = ({category}) => {
   const foodlist = useSelector((state) => state.fooditem.foodlist);
+ 
   const cartItems = useSelector((state) => state.fooditem.cartItems);
   const dispatchItems = useDispatch();
+  
+  // console.log("foodlist",foodlist);
+  // console.log("cartItems", cartItems);
 
-  console.log(foodlist);
-  console.log("cartItems", cartItems);
+  const apiurl = import.meta.env.VITE_API_URLKEY;
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    await axios
+      .get(`${apiurl}/api/food/list`)
+      .then((res) => {
+        dispatchItems(showProducts(res.data.data));
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handleInc = (id, quantity, name, description, image, price) => {
     dispatchItems(incrementProduct({ id }));
     let addedItems = {
@@ -46,7 +63,7 @@ const FoodItems = ({category}) => {
                 key={index}
                 className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative z-10"
               >
-                <img className="rounded-t-lg" src={element.image} alt="" />
+                <img className="rounded-t-lg" src={`${apiurl}/images/${element.image}`} alt="" />
                 {!element.quantity ? (
                   <button
                     className="absolute top-2 right-1 z-100"

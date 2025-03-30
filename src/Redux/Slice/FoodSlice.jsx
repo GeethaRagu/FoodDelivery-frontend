@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { food_list } from "../../assets/frontend_assets/assets";
+
 
 const initialState = {
-  foodlist: food_list,
+  foodlist: [],
   cartItems: [],
 };
 const findindex = (array, id) => {
@@ -17,6 +17,9 @@ const foodSlice = createSlice({
   name: "fooditem",
   initialState,
   reducers: {
+    showProducts:(state,action)=>{
+      state.foodlist = action.payload;
+    },
     incrementProduct: (state, action) => {
       //console.log("increment called")
       let { id } = action.payload;
@@ -83,7 +86,7 @@ const foodSlice = createSlice({
 export const {
   incrementProduct,
   decrementProduct,
-
+  showProducts,
   addtoCart,
   removeFromCart,
 } = foodSlice.actions;

@@ -8,6 +8,7 @@ const Cart = () => {
   //console.log(cartItems.length);
   const dispatchItems = useDispatch();
   const navigate = useNavigate();
+  const apiurl = import.meta.env.VITE_API_URLKEY;
   //Total price
   const totalPrice = cartItems.reduce(
     (total, data) => total + data.price * (data.quantity || 1),
@@ -45,7 +46,7 @@ const Cart = () => {
                   key={index}
                   className="grid grid-cols-6 pb-2 pt-2 items-center"
                 >
-                  <img src={element.image} className="w-20 h-20" />
+                  <img src={`${apiurl}/images/${element.image}`} className="w-20 h-20" />
                   <p>{element.name}</p>
                   <p>₹{element.price}</p>
                   <p>{element.quantity}</p>
