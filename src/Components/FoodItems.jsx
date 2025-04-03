@@ -10,20 +10,24 @@ import {
 import { assets } from "../assets/frontend_assets/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { updateuserCart } from "../Redux/Slice/UserSlice";
 
-const FoodItems = ({category}) => {
+const FoodItems = ({ category }) => {
   const foodlist = useSelector((state) => state.fooditem.foodlist);
- 
+  const currentuser = useSelector((state) => state.user.currentuser);
+  //console.log("currentuser", currentuser);
+ // console.log("currentusercart", currentuser?.cartData);
   const cartItems = useSelector((state) => state.fooditem.cartItems);
   const dispatchItems = useDispatch();
-  
-  // console.log("foodlist",foodlist);
+
+  //console.log("foodlist", foodlist);
   // console.log("cartItems", cartItems);
 
   const apiurl = import.meta.env.VITE_API_URLKEY;
   useEffect(() => {
     fetchData();
-  }, []);
+    getCart();
+  }, [currentuser?.cartData]);
   const fetchData = async () => {
     await axios
       .get(`${apiurl}/api/food/list`)
@@ -33,26 +37,85 @@ const FoodItems = ({category}) => {
       .catch((error) => console.log(error));
   };
 
-  const handleInc = (id, quantity, name, description, image, price) => {
-    dispatchItems(incrementProduct({ id }));
-    let addedItems = {
-      _id: id,
-      name: name,
-      description: description,
-      price: price,
-      image: image,
-    };
-    //console.log(addedItems);
-    dispatchItems(addtoCart(addedItems));
-    toast.success("Food Item added to cart");
+  const handleInc = async (
+    itemId,
+    quantity,
+    name,
+    description,
+    image,
+    price
+  ) => {
+    await axios
+      .post(
+        `${apiurl}/api/cart/add`,
+        { itemId },
+        {
+          headers: {
+            token: localStorage.getItem("Token"),
+          },
+        }
+      )
+      .then((res) => {
+        // console.log(res.data);
+        dispatchItems(incrementProduct({ itemId }));
+        let addedItems = {
+          _id: itemId,
+          name: name,
+          description: description,
+          price: price,
+          image: image,
+        };
+        console.log(addedItems);
+        dispatchItems(addtoCart(addedItems));
+        toast.success("Food Item added to cart");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Not Authorized.Login Again");
+      });
   };
-  const handleDec = (id, quantity) => {
-    dispatchItems(decrementProduct({ id }));
-    dispatchItems(removeFromCart({ id }));
-    toast.success("Food Item removed from cart");
+  const handleDec = async (itemId, quantity) => {
+    await axios
+      .post(
+        `${apiurl}/api/cart/remove`,
+        { itemId },
+        {
+          headers: {
+            token: localStorage.getItem("Token"),
+          },
+        }
+      )
+      .then((res) => {
+        // console.log(res.data);
+        dispatchItems(decrementProduct({ itemId }));
+        dispatchItems(removeFromCart({ itemId }));
+        toast.success("Food Item removed from cart");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Not Authorized.Login Again");
+      });
   };
-
-  
+  let itemsincart;
+  const getCart = async () => {
+    await axios
+      .post(
+        `${apiurl}/api/cart/get`,
+        {},
+        {
+          headers: {
+            token: localStorage.getItem("Token"),
+          },
+        }
+      )
+      .then((res) => {
+        //console.log(res.data);
+        itemsincart = res.data;
+        dispatchItems(updateuserCart(itemsincart));
+       // console.log(itemsincart.cartData)
+      })
+      .catch((error) => {});
+  };
   return (
     <div>
       <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -66,8 +129,14 @@ const FoodItems = ({category}) => {
                 key={index}
                 className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative z-10"
               >
-                <img className="rounded-t-lg" src={`${apiurl}/images/${element.image}`} alt="" />
-                {!element.quantity ? (
+                {/* {itemsincart.cartData[element._id]}  */}
+                <img
+                  className="rounded-t-lg"
+                  src={`${apiurl}/images/${element.image}`}
+                  alt=""
+                />
+                {!currentuser?.cartData[element._id] ||
+                currentuser?.cartData[element._id] === 0 ? (
                   <button
                     className="absolute top-2 right-1 z-100"
                     onClick={() =>
@@ -95,7 +164,7 @@ const FoodItems = ({category}) => {
                       </button>
                     </span>
                     <span className="text-1xl font-semibold -mt-1.5">
-                      {element.quantity ? element.quantity : 0}
+                      {currentuser?.cartData[element._id]}
                     </span>
                     <span>
                       <button

@@ -29,10 +29,10 @@ const SignIn = ({ setSignIn }) => {
     await axios
       .post(`${apiurl}/api/user/signin`, values)
       .then((res) => {
-       // console.log(res.data);
+       console.log(res.data);
        // console.log(res.data.loggeduser);
         //console.log(res.data.token);
-        dispatch(signInSuccess(res.data.loggeduser[0]));
+        dispatch(signInSuccess(res.data.loggeduser));
         localStorage.setItem("Token", res.data.token);
         toast.success(res.data.message);
         setSignIn(false);

@@ -23,17 +23,19 @@ const foodSlice = createSlice({
     },
     incrementProduct: (state, action) => {
       //console.log("increment called")
-      let { id } = action.payload;
-      let index = findindex(state.foodlist, id);
-      //console.log(index);
+      let  {itemId } = action.payload;
+     // console.log(itemId);
+      let index = findindex(state.foodlist, itemId);
+     // console.log(index);
       if (index !== null)
         state.foodlist[index].quantity =
           (state.foodlist[index].quantity || 0) + 1;
     },
     decrementProduct: (state, action) => {
       //console.log("decrement called");
-      let { id } = action.payload;
-      let index = findindex(state.foodlist, id);
+      let { itemId } = action.payload;
+      //console.log(itemId);
+      let index = findindex(state.foodlist, itemId);
       if (index !== null && state.foodlist[index].quantity > 0)
         state.foodlist[index].quantity = state.foodlist[index].quantity - 1;
     },
@@ -63,7 +65,8 @@ const foodSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       const item = action.payload;
-      const itemId = item.id;
+      //console.log("item",item);
+      const itemId = item.itemId;
       //console.log(itemId);
       const targetItem = state.cartItems.find((x) => x._id === itemId);
 
