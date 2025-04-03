@@ -1,16 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { assets } from "../assets/frontend_assets/assets";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signOutSuccess } from "../Redux/Slice/UserSlice";
 
 const Header = ({ setSignIn }) => {
   const [menu, setMenu] = useState("home");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.fooditem.cartItems);
   const totalQuantity = cartItems.reduce(
     (total, data) => total + (data.quantity || 1),
     0
   );
+  const token = localStorage.getItem("Token");
+
+  const handleSignout=()=>{
+    dispatch(signOutSuccess());
+    localStorage.removeItem("Token");
+    navigate("/");
+  }
   return (
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -90,7 +100,7 @@ const Header = ({ setSignIn }) => {
                 <img src={assets.search_icon} alt="Search" />
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0 relative">
-                <Link to="/cart" onClick={()=>setMenu("cart")}>
+                <Link to="/cart" onClick={() => setMenu("cart")}>
                   <img src={assets.basket_icon} alt="Add to Cart" />
                 </Link>
                 {cartItems.length > 0 ? (
@@ -102,14 +112,31 @@ const Header = ({ setSignIn }) => {
                 )}
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
-                <button
-                  className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
-                  onClick={() => {
-                    setSignIn(true);
-                  }}
-                >
-                  SignIn
-                </button>
+                {!token ? (
+                  <button
+                    className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+                    onClick={() => {
+                      setSignIn(true);
+                    }}
+                  >
+                    SignIn
+                  </button>
+                ) : (
+                  <div className="navbar-profile">
+                    <img src={assets.profile_icon} />
+                    <ul className="navbar-profile-dropdown">
+                      <li>
+                        <img src={assets.bag_icon} className="w-5"/>
+                        <p>Orders</p>
+                      </li>
+                      <hr />
+                      <li onClick={()=>handleSignout()}>
+                        <img src={assets.logout_icon} className="w-5"/>
+                        <p>LogOut</p>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
                 <FaMoon />

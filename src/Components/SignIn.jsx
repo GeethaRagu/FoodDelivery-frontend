@@ -3,9 +3,17 @@ import { assets } from "../assets/frontend_assets/assets";
 import { useState } from "react";
 import { Field, Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { signInSuccess, signUpSuccess } from "../Redux/Slice/UserSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 const SignIn = ({ setSignIn }) => {
+  const dispatch = useDispatch();
   const [currentstate, setCurrentState] = useState("Sign Up");
+  const currentuser = useSelector((state)=>state.user.currentuser);
+  console.log("currentuser",currentuser);
+  const apiurl = import.meta.env.VITE_API_URLKEY;
   const initialValuessignIn = {
     email: "",
     password: "",
@@ -17,7 +25,20 @@ const SignIn = ({ setSignIn }) => {
   });
 
   const handleSubmitsignIn = async (values) => {
-    console.log(values);
+    //console.log(values);
+    await axios
+      .post(`${apiurl}/api/user/signin`, values)
+      .then((res) => {
+       // console.log(res.data);
+       // console.log(res.data.loggeduser);
+        //console.log(res.data.token);
+        dispatch(signInSuccess(res.data.loggeduser[0]));
+        localStorage.setItem("Token", res.data.token);
+        toast.success(res.data.message);
+        setSignIn(false);
+      })
+      .catch((error) => console.log(error));
+   
   };
   const formiksignIn = useFormik({
     initialValues: initialValuessignIn,
@@ -39,7 +60,19 @@ const SignIn = ({ setSignIn }) => {
   });
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    // console.log(values);
+    await axios
+      .post(`${apiurl}/api/user/signup`, values)
+      .then((res) => {
+        //console.log(res.data);
+        dispatch(signUpSuccess(res.data.newUser));
+        localStorage.setItem("Token", res.data.token);
+        toast.success(res.data.message);
+        //navigate('/');
+        setSignIn(false);
+      })
+      .catch((error) => console.log(error));
+    
   };
   const formik = useFormik({
     initialValues: initialValues,
@@ -156,7 +189,10 @@ const SignIn = ({ setSignIn }) => {
                   </button>
                   <p>
                     Already have an account ?
-                    <a className="cursor-pointer hover:text-amber-800"  onClick={() => setCurrentState("Sign In")}>
+                    <a
+                      className="cursor-pointer hover:text-amber-800"
+                      onClick={() => setCurrentState("Sign In")}
+                    >
                       &nbsp;Click here
                     </a>
                   </p>
@@ -217,7 +253,10 @@ const SignIn = ({ setSignIn }) => {
                   </button>
                   <p>
                     Don't have an account ?
-                    <a className="cursor-pointer hover:text-amber-800" onClick={() => setCurrentState("Sign Up")}>
+                    <a
+                      className="cursor-pointer hover:text-amber-800"
+                      onClick={() => setCurrentState("Sign Up")}
+                    >
                       &nbsp;Register here
                     </a>
                   </p>

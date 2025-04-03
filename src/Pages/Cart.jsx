@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { decrementProduct, removeFromCart } from "../Redux/Slice/FoodSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.fooditem.cartItems);
@@ -14,12 +15,13 @@ const Cart = () => {
     (total, data) => total + data.price * (data.quantity || 1),
     0
   );
-  console.log("Totalprice", totalPrice);
+  //console.log("Totalprice", totalPrice);
    
   const deliveryfee = 10;
   const handleremove = (id) => {
     dispatchItems(decrementProduct({ id }));
     dispatchItems(removeFromCart({ id }));
+    toast.success("Food Item removed from cart");
   };
   return (
     <div className="m-5">

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
+
 const initialState = {
   foodlist: [],
   cartItems: [],
@@ -43,12 +44,14 @@ const foodSlice = createSlice({
       const existItem = state.cartItems.find((x) => x._id === item._id);
       if (existItem) {
         // Item exists, update quantity
+        
         return {
           ...state,
           cartItems: state.cartItems.map((x) =>
             x._id === item._id ? { ...x, quantity: x.quantity + 1 } : x
           ),
         };
+        
       } else {
         // Item does not exist, add to cart with quantity 1
         return {
@@ -56,11 +59,12 @@ const foodSlice = createSlice({
           cartItems: [...state.cartItems, { ...item, quantity: 1 }],
         };
       }
+      
     },
     removeFromCart: (state, action) => {
       const item = action.payload;
       const itemId = item.id;
-      console.log(itemId);
+      //console.log(itemId);
       const targetItem = state.cartItems.find((x) => x._id === itemId);
 
       if (targetItem) {

@@ -9,6 +9,7 @@ import {
 } from "../Redux/Slice/FoodSlice";
 import { assets } from "../assets/frontend_assets/assets";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const FoodItems = ({category}) => {
   const foodlist = useSelector((state) => state.fooditem.foodlist);
@@ -41,12 +42,14 @@ const FoodItems = ({category}) => {
       price: price,
       image: image,
     };
-    console.log(addedItems);
+    //console.log(addedItems);
     dispatchItems(addtoCart(addedItems));
+    toast.success("Food Item added to cart");
   };
   const handleDec = (id, quantity) => {
     dispatchItems(decrementProduct({ id }));
     dispatchItems(removeFromCart({ id }));
+    toast.success("Food Item removed from cart");
   };
 
   
