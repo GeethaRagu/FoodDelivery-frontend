@@ -49,7 +49,8 @@ const FoodItems = ({ category }) => {
     image,
     price
   ) => {
-    await axios
+    if(localStorage.getItem("Token")){
+      await axios
       .post(
         `${apiurl}/api/cart/add`,
         { itemId },
@@ -78,6 +79,10 @@ const FoodItems = ({ category }) => {
         console.log(error);
         toast.error("Not Authorized.Login Again");
       });
+    }
+    else{
+      toast.error("Login to add food items to cart")
+    }
   };
   const handleDec = async (itemId, quantity) => {
     await axios
