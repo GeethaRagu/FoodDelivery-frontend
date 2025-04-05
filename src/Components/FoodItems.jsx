@@ -211,7 +211,7 @@ const FoodItems = ({ category }) => {
                     {element.description}
                   </p>
                   <p className="mb-3 font-semibold text-2xl text-amber-600 dark:text-amber-400">
-                    ${element.price}
+                  ₹{element.price}
                   </p>
                 </div>
               </div>

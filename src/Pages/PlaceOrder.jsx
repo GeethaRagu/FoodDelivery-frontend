@@ -247,18 +247,18 @@ const PlaceOrder = () => {
               <div>
                 <div className="grid grid-cols-2 items-center">
                   <p className="text-2xl font-normal">SubTotal</p>
-                  <p className="text-2xl font-normal">${totalPrice}</p>
+                  <p className="text-2xl font-normal">₹{totalPrice}</p>
                 </div>
                 <hr className="mt-5 mb-5" />
                 <div className="grid grid-cols-2 items-center">
                   <p className="text-2xl font-normal">Delivery Fee</p>
-                  <p className="text-2xl font-normal">${deliveryfee}</p>
+                  <p className="text-2xl font-normal">₹{deliveryfee}</p>
                 </div>
                 <hr className="mt-5 mb-5" />
                 <div className="grid grid-cols-2 items-center">
                   <b className="text-2xl font-semibold">Total</b>
                   <b className="text-2xl font-semibold">
-                    ${totalPrice + deliveryfee}
+                  ₹{totalPrice + deliveryfee}
                   </b>
                 </div>
               </div>

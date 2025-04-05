@@ -141,10 +141,10 @@ const Header = ({ setSignIn }) => {
                   </div>
                 )}
               </li>
-              <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
+              {/* <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
                 <FaMoon />
                 <FaSun />
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
