@@ -10,10 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 const SignIn = ({ setSignIn }) => {
   const dispatch = useDispatch();
-  const [currentstate, setCurrentState] = useState("Sign Up");
+  const [currentstate, setCurrentState] = useState("Sign In");
   const currentuser = useSelector((state)=>state.user.currentuser);
-  console.log("currentuser",currentuser);
+ //console.log("currentuser",currentuser);
   const apiurl = import.meta.env.VITE_API_URLKEY;
+  
   const initialValuessignIn = {
     email: "",
     password: "",
@@ -29,15 +30,16 @@ const SignIn = ({ setSignIn }) => {
     await axios
       .post(`${apiurl}/api/user/signin`, values)
       .then((res) => {
-       console.log(res.data);
+      // console.log(res.data);
        // console.log(res.data.loggeduser);
         //console.log(res.data.token);
         dispatch(signInSuccess(res.data.loggeduser));
         localStorage.setItem("Token", res.data.token);
         toast.success(res.data.message);
+       
         setSignIn(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {console.log(error);toast.error(error)});
    
   };
   const formiksignIn = useFormik({
@@ -79,6 +81,7 @@ const SignIn = ({ setSignIn }) => {
     validationSchema: validationschema,
     onSubmit: handleSubmit,
   });
+  
   return (
     <div className="absolute grid z-1 w-full h-full bg-black-90">
       <div className="place-self-center max-w-23vw text-gray-500 bg-white flex flex-col gap-6 px-7 py-6 rounded-md">

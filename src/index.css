@@ -72,3 +72,17 @@ button {
 .navbar-profile-dropdown li:hover{
   color: tomato;
 }
+.spinner{
+  width:100px;
+  height:100px;
+  place-self: center;
+  border:5px solid #bdbdbd;
+  border-radius: 50%;
+  border-top-color: tomato;
+  animation: rotate 1s infinite;
+}
+@keyframes rotate{
+  100%{
+    transform: rotate(360deg);
+  }
+}

@@ -88,6 +88,14 @@ const foodSlice = createSlice({
         }
       }
     },
+    updateCart:(state,action) =>{
+      console.log(action.payload);
+      state.cartItems = action.payload;
+
+   },
+    clearCart:(state,action)=>{
+      state.cartItems = []
+    }
   },
 });
 export const {
@@ -96,5 +104,7 @@ export const {
   showProducts,
   addtoCart,
   removeFromCart,
+  clearCart,
+  updateCart
 } = foodSlice.actions;
 export default foodSlice.reducer;

@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { assets } from "../assets/frontend_assets/assets";
 import { useDispatch, useSelector } from "react-redux";
-import { signOutSuccess } from "../Redux/Slice/UserSlice";
+import { clearuserCart, signOutSuccess } from "../Redux/Slice/UserSlice";
+import { clearCart } from "../Redux/Slice/FoodSlice";
 
 const Header = ({ setSignIn }) => {
   const [menu, setMenu] = useState("home");
@@ -16,11 +17,13 @@ const Header = ({ setSignIn }) => {
   );
   const token = localStorage.getItem("Token");
 
-  const handleSignout=()=>{
+  const handleSignout = () => {
     dispatch(signOutSuccess());
+    dispatch(clearCart());
+   
     localStorage.removeItem("Token");
     navigate("/");
-  }
+  };
   return (
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -125,13 +128,13 @@ const Header = ({ setSignIn }) => {
                   <div className="navbar-profile">
                     <img src={assets.profile_icon} />
                     <ul className="navbar-profile-dropdown">
-                      <li>
-                        <img src={assets.bag_icon} className="w-5"/>
+                      <li onClick={()=>navigate("/myorders")}>
+                        <img src={assets.bag_icon} className="w-5" />
                         <p>Orders</p>
                       </li>
                       <hr />
-                      <li onClick={()=>handleSignout()}>
-                        <img src={assets.logout_icon} className="w-5"/>
+                      <li onClick={() => handleSignout()}>
+                        <img src={assets.logout_icon} className="w-5" />
                         <p>LogOut</p>
                       </li>
                     </ul>

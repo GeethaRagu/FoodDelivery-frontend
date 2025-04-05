@@ -7,7 +7,7 @@ import axios from "axios";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.fooditem.cartItems);
-  //console.log(cartItems.length);
+  //console.log(cartItems);
   const dispatchItems = useDispatch();
   const navigate = useNavigate();
   const apiurl = import.meta.env.VITE_API_URLKEY;
@@ -71,9 +71,9 @@ const Cart = () => {
                     className="w-20 h-20"
                   />
                   <p>{element.name}</p>
-                  <p>₹{element.price}</p>
+                  <p>${element.price}</p>
                   <p>{element.quantity}</p>
-                  <p>₹{element.price * element.quantity}</p>
+                  <p>${element.price * element.quantity}</p>
                   <p
                     onClick={() => handleremove(element._id)}
                     className="text-red-600 text-2xl font-bold cursor-pointer"
@@ -92,18 +92,18 @@ const Cart = () => {
               <div>
                 <div className="grid grid-cols-2 items-center">
                   <p className="text-2xl font-normal">SubTotal</p>
-                  <p className="text-2xl font-normal">₹{totalPrice}</p>
+                  <p className="text-2xl font-normal">${totalPrice}</p>
                 </div>
                 <hr className="mt-5 mb-5" />
                 <div className="grid grid-cols-2 items-center">
                   <p className="text-2xl font-normal">Delivery Fee</p>
-                  <p className="text-2xl font-normal">₹{deliveryfee}</p>
+                  <p className="text-2xl font-normal">${deliveryfee}</p>
                 </div>
                 <hr className="mt-5 mb-5" />
                 <div className="grid grid-cols-2 items-center">
                   <b className="text-2xl font-semibold">Total</b>
                   <b className="text-2xl font-semibold">
-                    ₹{totalPrice + deliveryfee}
+                    ${totalPrice + deliveryfee}
                   </b>
                 </div>
               </div>

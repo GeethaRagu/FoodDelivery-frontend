@@ -6,6 +6,8 @@ import FooterArea from "./Components/FooterArea";
 import SignIn from "./Components/SignIn";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Verify from "./Pages/Verify";
+import MyOrders from "./Pages/MyOrders";
 const ContactUs = React.lazy(() => import("./Pages/ContactUs"));
 const Cart = React.lazy(() => import("./Pages/Cart"));
 const PlaceOrder = React.lazy(() => import("./Pages/PlaceOrder"));
@@ -49,6 +51,8 @@ const App = () => {
                 </React.Suspense>
               }
             />
+            <Route path="/verify" element={<Verify />} />
+            <Route path="/myorders" element={<MyOrders />} />
           </Routes>
         </div>
         <FooterArea />

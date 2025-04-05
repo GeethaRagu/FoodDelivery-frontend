@@ -6,6 +6,7 @@ import {
   incrementProduct,
   removeFromCart,
   showProducts,
+  updateCart,
 } from "../Redux/Slice/FoodSlice";
 import { assets } from "../assets/frontend_assets/assets";
 import axios from "axios";
@@ -26,8 +27,11 @@ const FoodItems = ({ category }) => {
   const apiurl = import.meta.env.VITE_API_URLKEY;
   useEffect(() => {
     fetchData();
-    getCart();
-  }, [currentuser?.cartData]);
+    if(localStorage.getItem("Token")){
+      getCart();
+    }
+    
+  }, []);
   const fetchData = async () => {
     await axios
       .get(`${apiurl}/api/food/list`)
@@ -65,8 +69,9 @@ const FoodItems = ({ category }) => {
           price: price,
           image: image,
         };
-        console.log(addedItems);
+       // console.log(addedItems);
         dispatchItems(addtoCart(addedItems));
+        getCart();
         toast.success("Food Item added to cart");
       })
       .catch((error) => {
@@ -89,6 +94,7 @@ const FoodItems = ({ category }) => {
         // console.log(res.data);
         dispatchItems(decrementProduct({ itemId }));
         dispatchItems(removeFromCart({ itemId }));
+        getCart();
         toast.success("Food Item removed from cart");
       })
       .catch((error) => {
@@ -112,7 +118,19 @@ const FoodItems = ({ category }) => {
         //console.log(res.data);
         itemsincart = res.data;
         dispatchItems(updateuserCart(itemsincart));
-       // console.log(itemsincart.cartData)
+        //dispatchItems(updateCart(itemsincart));
+       //console.log(itemsincart.cartData);
+       const cartdetails = itemsincart.cartData;
+       let cart = []
+       foodlist.map((item)=>{
+          if(cartdetails[item._id]){
+                let iteminfo = item;
+                iteminfo["quantity"] = cartdetails[item._id];
+                cart.push(iteminfo);
+          }
+       })
+       //console.log("CART",cart);
+       dispatchItems(updateCart(cart))
       })
       .catch((error) => {});
   };
@@ -193,7 +211,7 @@ const FoodItems = ({ category }) => {
                     {element.description}
                   </p>
                   <p className="mb-3 font-semibold text-2xl text-amber-600 dark:text-amber-400">
-                    ₹{element.price}
+                    ${element.price}
                   </p>
                 </div>
               </div>
