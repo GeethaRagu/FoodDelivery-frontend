@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Verify from "./Pages/Verify";
 import MyOrders from "./Pages/MyOrders";
-const ContactUs = React.lazy(() => import("./Pages/ContactUs"));
+
 const Cart = React.lazy(() => import("./Pages/Cart"));
 const PlaceOrder = React.lazy(() => import("./Pages/PlaceOrder"));
 const Search = React.lazy(()=>import("./Pages/Search"));
@@ -29,14 +29,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
 
-            <Route
-              path="/contactus"
-              element={
-                <React.Suspense fallback={<div>Loading..</div>}>
-                  <ContactUs />
-                </React.Suspense>
-              }
-            />
+           
             <Route
               path="/cart"
               element={
