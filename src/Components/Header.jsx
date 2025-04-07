@@ -100,7 +100,8 @@ const Header = ({ setSignIn }) => {
                 </Link>
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0">
-                <img src={assets.search_icon} alt="Search" />
+                <Link to="/search"><img src={assets.search_icon} alt="Search" /></Link>
+                
               </li>
               <li className="block py-2 px-3 rounded-sm md:border-0 md:p-0 relative">
                 <Link to="/cart" onClick={() => setMenu("cart")}>

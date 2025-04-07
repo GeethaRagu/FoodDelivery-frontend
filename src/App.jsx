@@ -11,6 +11,7 @@ import MyOrders from "./Pages/MyOrders";
 const ContactUs = React.lazy(() => import("./Pages/ContactUs"));
 const Cart = React.lazy(() => import("./Pages/Cart"));
 const PlaceOrder = React.lazy(() => import("./Pages/PlaceOrder"));
+const Search = React.lazy(()=>import("./Pages/Search"));
 
 const App = () => {
   const [signin, setSignIn] = useState(false);
@@ -53,6 +54,14 @@ const App = () => {
             />
             <Route path="/verify" element={<Verify />} />
             <Route path="/myorders" element={<MyOrders />} />
+            <Route
+              path="/search"
+              element={
+                <React.Suspense fallback={<div>Loading..</div>}>
+                  <Search />
+                </React.Suspense>
+              }
+            />
           </Routes>
         </div>
         <FooterArea />

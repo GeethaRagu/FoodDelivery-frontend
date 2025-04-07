@@ -89,7 +89,7 @@ const foodSlice = createSlice({
       }
     },
     updateCart:(state,action) =>{
-      console.log(action.payload);
+      //console.log(action.payload);
       state.cartItems = action.payload;
 
    },
