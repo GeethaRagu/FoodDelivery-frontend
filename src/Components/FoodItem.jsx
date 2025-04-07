@@ -125,7 +125,7 @@ const FoodItem = ({ element,index }) => {
   };
   return (
     <div>
-      <div key={index} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative z-10">
+      <div >
         {/* {itemsincart.cartData[element._id]}  */}
         <img
           className="rounded-t-lg"

@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  showProducts,
-  updateCart,
-} from "../Redux/Slice/FoodSlice";
+import { showProducts, updateCart } from "../Redux/Slice/FoodSlice";
 import { assets } from "../assets/frontend_assets/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -14,20 +11,19 @@ const FoodItems = ({ category }) => {
   const foodlist = useSelector((state) => state.fooditem.foodlist);
   const currentuser = useSelector((state) => state.user.currentuser);
   //console.log("currentuser", currentuser);
- // console.log("currentusercart", currentuser?.cartData);
+  // console.log("currentusercart", currentuser?.cartData);
   const cartItems = useSelector((state) => state.fooditem.cartItems);
   const dispatchItems = useDispatch();
 
- // console.log("foodlist", foodlist);
+  // console.log("foodlist", foodlist);
   // console.log("cartItems", cartItems);
 
   const apiurl = import.meta.env.VITE_API_URLKEY;
   useEffect(() => {
     fetchData();
-    if(localStorage.getItem("Token")){
+    if (localStorage.getItem("Token")) {
       getCart();
     }
-    
   }, []);
   const fetchData = async () => {
     await axios
@@ -38,7 +34,6 @@ const FoodItems = ({ category }) => {
       .catch((error) => console.log(error));
   };
 
- 
   let itemsincart;
   const getCart = async () => {
     await axios
@@ -56,18 +51,18 @@ const FoodItems = ({ category }) => {
         itemsincart = res.data;
         dispatchItems(updateuserCart(itemsincart));
         //dispatchItems(updateCart(itemsincart));
-       //console.log(itemsincart.cartData);
-       const cartdetails = itemsincart.cartData;
-       let cart = []
-       foodlist.map((item)=>{
-          if(cartdetails[item._id]){
-                let iteminfo = item;
-                iteminfo["quantity"] = cartdetails[item._id];
-                cart.push(iteminfo);
+        //console.log(itemsincart.cartData);
+        const cartdetails = itemsincart.cartData;
+        let cart = [];
+        foodlist.map((item) => {
+          if (cartdetails[item._id]) {
+            let iteminfo = item;
+            iteminfo["quantity"] = cartdetails[item._id];
+            cart.push(iteminfo);
           }
-       })
-       //console.log("CART",cart);
-       dispatchItems(updateCart(cart))
+        });
+        //console.log("CART",cart);
+        dispatchItems(updateCart(cart));
       })
       .catch((error) => {});
   };
@@ -80,7 +75,12 @@ const FoodItems = ({ category }) => {
         {foodlist.map((element, index) => {
           if (category === "All" || category === element.category) {
             return (
-              <FoodItem element={element} index={index}/>
+              <div
+                key={index}
+                className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative z-1"
+              >
+                <FoodItem element={element} index={index} />
+              </div>
             );
           }
         })}

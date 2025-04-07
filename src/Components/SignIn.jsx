@@ -83,7 +83,7 @@ const SignIn = ({ setSignIn }) => {
   });
   
   return (
-    <div className="absolute grid z-1 w-full h-full bg-black-90">
+    <div className="absolute grid z-10 w-full h-full bg-black-90">
       <div className="place-self-center max-w-23vw text-gray-500 bg-white flex flex-col gap-6 px-7 py-6 rounded-md">
         <div className="flex flex-row justify-between">
           <h2 className="text-amber-600 font-semibold text-2xl">
